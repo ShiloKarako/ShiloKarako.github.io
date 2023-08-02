@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+</head>
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .container {
+        width: 1000px;
+        margin: 0 auto;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex-direction: column;
+        top: 22px;
+        position: relative;
+        height: auto;
+        font-size: smaller;
+    }
+
+
+    a {
+        margin: 0;
+        transition: all .4s;
+        -webkit-transition: all .4s;
+        -o-transition: all .4s;
+        -moz-transition: all .4s
+    }
+
+    a:focus {
+        outline: none !important
+    }
+
+    a:hover {
+        text-decoration: none
+    }
+
+    p {
+        margin: 0
+    }
+
+    ul,
+    li {
+        margin: 0;
+        list-style-type: none
+    }
+
+    input {
+        display: block;
+        outline: none;
+        border: none !important
+    }
+
+    textarea {
+        display: block;
+        outline: none
+    }
+
+    textarea:focus,
+    input:focus {
+        border-color: transparent !important
+    }
+
+    iframe {
+        border: none !important
+    }
+
+    .limiter {
+        width: 100%;
+        margin: 0 auto
+    }
+
+
+
+
+
+    table {
+        border-spacing: 1;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        width: 100%;
+        margin: 0 auto;
+        position: relative
+    }
+
+    table thead tr {
+        height: 55px;
+        background: #122741
+    }
+
+    table tbody tr {
+        height: 35px
+    }
+
+    table tbody tr:last-child {
+        border: 0
+    }
+
+    table td,
+    table th {
+        text-align: center
+    }
+
+    table td.l,
+    table th.l {
+        text-align: center
+    }
+
+    table td.c,
+    table th.c {
+        text-align: center
+    }
+
+    table td.r,
+    table th.r {
+        text-align: center
+    }
+
+    .table100-head th {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        color: #fff;
+        line-height: 1;
+        font-weight: unset
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #f5f5f5
+    }
+
+    tbody tr {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        color: gray;
+        line-height: 1.2;
+        font-weight: unset
+    }
+
+    tbody tr:hover {
+        color: #555;
+        background-color: #f5f5f5;
+        cursor: pointer
+    }
+
+    .column1 {
+        width: auto;
+        ;
+    }
+
+    .column2 {
+        width: auto;
+    }
+
+    .column3 {
+        width: auto;
+    }
+
+    .column4 {
+        width: auto;
+        ;
+    }
+
+    .column5 {
+        width: auto;
+        ;
+    }
+
+    .column6 {
+        width: auto;
+        ;
+    }
+
+    @media screen and (max-width:992px) {
+        table {
+            display: block
+        }
+
+        .column4,
+        .column5,
+        .column6,
+        .column1,
+        .column2,
+        .column3,
+        .column7,
+        .column8 {
+            width: 100%
+        }
+
+        tbody tr {
+            font-size: 12px
+        }
+    }
+</style>
+
+<body>
+
+    <body>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr class="table100-head">
+                        <th class="column1">Date</th>
+                        <th class="column2">Hours 100%</th>
+                        <th class="column3">Hours 125%</th>
+                        <th class="column4">Hours 150%</th>
+                        <th class="column5">Rate 100%</th>
+                        <th class="column6">Rate 125%</th>
+                        <th class="column7">Rate 150%</th>
+                        <th class="column8">Total Hours</th>
+                        <th class="column9">Total Salary</th>
+                    </tr>
+                </thead>
+                <tbody id="result">
+                </tbody>
+                <tbody id="summary">
+                </tbody>
+            </table>
+        </div>
+        <div class="report">
+
+        </div>
+        <script>
+            const users = JSON.parse(localStorage.getItem('data')) || [];
+            const userName = sessionStorage.getItem("userName");
+            const shifts = JSON.parse(localStorage.getItem(userName))
+            var user = users.findIndex(function(u) {
+                return u.userName == userName;
+            })
+            const urlParams = new URLSearchParams(window.location.search);
+            const result = urlParams.get('result');
+            document.getElementById("result").innerHTML = result.replaceAll(",", "")
+            const salary = urlParams.get('sumSalary');
+            const hours = urlParams.get('sumHours');
+            const hoursRegularHours = urlParams.get('hours100');
+            const hoursOneHundredAndTwentyFiveBonus = urlParams.get('hours125');
+            const hoursOneHundredAndFiftyBonus = urlParams.get('hours150');
+            const sumRegularHours = urlParams.get('sum100');
+            const sumOneHundredAndTwentyFiveBonus = urlParams.get('sum125');
+            const sumOneHundredAndFiftyBonus = urlParams.get('sum150');
+            const startDate = urlParams.get('start');
+            const endDate = urlParams.get('end');
+            const filterShifts = urlParams.get('shifts');
+
+
+        </script>
+
+
+    </body>
+
+</html>

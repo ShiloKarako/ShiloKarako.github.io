@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: 450px;
+            margin: 0 auto;
+            padding: 250px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            position: relative;
+            top: 22px;
+            height: 650PX;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=number] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus,
+        input[type=password]:focus,
+        input[type=number]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        .registerbtn {
+            background-color: #122741;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+
+        input[type=submit] {
+            background-color: #122741;
+            color: white;
+        }
+
+        #hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #122741;
+            color: white;
+            
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+  
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Edit Employment Profile</h1>
+        <p>Here you can update your employment profile details</p>
+
+        <hr id="hr">
+        <label for="Company Name"><b>Company Name</b></label>
+        <input type="text" placeholder="Enter Company Name" name="Company Name" id="Company Name" required>
+
+        <label for="Job Title"><b>Job Title</b></label>
+        <input type="text" placeholder="Job Title" name="Job Title" id="Job Title" required>
+        <br>
+        <label for="Hourly Wage"><b>Hourly Wage:</b></label>
+        <input id="Hourly Wage" placeholder="Enter Your Hourly Wage" type="number" min="29.12" required />
+        <br>
+        <label for="Daily Travel Payment"><b>Daily Travel Payment: </b></label>
+        <input id="Daily Travel Payment" placeholder="Enter Your Daily Travel Payment" type="number" required />
+        <br>
+        <label for="Daily Salary Supplement"><b>Daily Salary Supplement: </b></label>
+        <input id="Daily Salary Supplement" placeholder="Enter Your Daily Salary Supplement" type="number" required />
+        <br>
+        <button id="update" type="submit" class="registerbtn">Update</button>
+    </div>
+
+    <script>
+        const users = JSON.parse(localStorage.getItem('data')) || [];
+        const userName = sessionStorage.getItem("userName");
+        const shifts = JSON.parse(localStorage.getItem(userName))
+        var user = users.findIndex(function (u) {
+                return u.userName == userName;
+            });
+
+       
+                document.getElementById("Company Name").value = users[user].companyName || ''
+                document.getElementById("Job Title").value = users[user].jobTitle || ''
+                document.getElementById("Hourly Wage").value = users[user].hourlyWage
+                document.getElementById("Daily Travel Payment").value = users[user].dailyTravelPayment
+                document.getElementById("Daily Salary Supplement").value = users[user].dailySalarySupplement
+
+       
+        document.getElementById("update").addEventListener('click', function () {
+        
+            var user = users.findIndex(function (u) {
+                return u.userName == userName;
+            });
+            const firstName = users[user].firstName
+            const lastName = users[user].lastName
+            const picture = users[user].picture
+            const email = users[user].email
+            const age = users[user].age
+            const password = users[user].password
+            var user = users.findIndex(function (u) {
+                return u.userName == userName;
+            });
+            const companyName = document.getElementById("Company Name").value
+            const jobTitle = document.getElementById("Job Title").value
+            let hourlyWage = Number(document.getElementById("Hourly Wage").value)
+            if(hourlyWage < 29.12) {
+                hourlyWage = 29.12
+            }
+            const travelPayment = Number(document.getElementById("Daily Travel Payment").value)
+            const salarySupplement = Number(document.getElementById("Daily Salary Supplement").value)
+            users[user] = {
+                userName: userName,
+                firstName: firstName,
+                lastName: lastName,
+                picture: picture,
+                email: email,
+                age: Math.floor(age),
+                password: password,
+                companyName: companyName,
+                jobTitle: jobTitle,
+                hourlyWage: hourlyWage,
+                dailyTravelPayment: travelPayment,
+                dailySalarySupplement: salarySupplement
+            }
+            sessionStorage.setItem("userName", userName);
+            // המרת מערך לשפה שהאחסון המקומי יודע לקרוא
+            const jsonArray = JSON.stringify(users);
+            // ואז שמירת המערך שהומרה לשפת האחסון לתוך אחסון הדפדפן
+            localStorage.setItem('data', jsonArray);
+            window.location.href = "myEmploymentProfile.html"
+        })
+
+    </script>
+</body>
+
+</html>

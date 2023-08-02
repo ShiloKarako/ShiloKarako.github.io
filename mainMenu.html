@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+</head>
+        <style>
+            body {
+                background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+                background-size: cover;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .container {
+                width: 820px;
+                margin: 0 auto;
+                background-color: #fff;
+                border-radius: 15px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                flex-direction: column;
+                top: 22px;
+                position: relative;
+                height: 0px;
+            }
+
+            a {
+                color: #ffffff;
+                width: auto;
+                height: 50%;
+                white-space: nowrap;
+                writing-mode: vertical-rl;
+                text-decoration: none;
+
+            }
+
+            button {
+                width: 160PX;
+                height: 649px;
+                border-style: hidden;
+                background-color: #122741;
+            }
+
+            #btnMyProfile:hover {
+                background-image: url('pexels-photo-7567557%20(1).jpeg');
+                background-size: cover;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            #btnMyEmploymentProfile:hover {
+                background-image: url('pexels-photo-7567557.jpeg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            #btnUpdateShift:hover {
+                background-image: url('pexels-photo867574.jpeg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            #btnSalaryCalculation:hover {
+                background-image: url('pexels-photo-4386321.jpeg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            #btnContactUS:hover {
+                background-image: url('pexels-photo-7319305.jpeg');
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+
+
+            b {
+                position: fixed;
+                top: 50px;
+                font-size: 35px;
+            }
+        </style>
+    </head>
+
+<body>
+    <div class="container">
+        <button id="btnMyProfile"><a href=""><b>MY PROFILE</b></a></button>
+        <button id="btnMyEmploymentProfile"><a href=""><b>MY EMPLOYMENT PROFILE</b></a></button>
+        <button id="btnUpdateShift"><a href=""><b>UPDATE SHIFT</b></a></button>
+        <button id="btnSalaryCalculation"><a href=""><b>SALARY CALCULATION</b></a></button>
+        <button id="btnContactUS"><a href=""><b>CONTACT US</b></a></button>
+        <script>
+            const users = JSON.parse(localStorage.getItem('data')) || [];
+            const userName = sessionStorage.getItem("userName");
+            document.getElementById("btnMyProfile").addEventListener('click', () => {
+                window.location.href = "myProfile.html"
+            })
+            document.getElementById("btnMyEmploymentProfile").addEventListener('click', () => {
+                window.location.href = "myEmploymentProfile.html"
+            })
+            document.getElementById("btnUpdateShift").addEventListener('click', () => {
+                window.location.href = "mainScreen.html"
+            })
+            document.getElementById("btnSalaryCalculation").addEventListener('click', () => {
+                window.location.href = "salaryCalculation.html"
+            })
+            document.getElementById("btnContactUS").addEventListener('click', () => {
+                window.location.href = "contactForm.html"
+            })
+        </script>
+
+
+</body>
+
+</html>

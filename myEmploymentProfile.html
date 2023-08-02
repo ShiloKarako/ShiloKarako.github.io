@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: 450px;
+            margin: 0 auto;
+            padding: 250px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            position: relative;
+            top: 22px;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #122741;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 5px 10px;
+        }
+
+        #hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        #logout {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #122741;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            position: absolute;
+            bottom: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #logout:hover {
+            background-color: #ff0015;
+            color: #ffffff;
+        }
+
+        img.avatar {
+            position: absolute;
+            width: 65%;
+            border-radius: 50%;
+            top: 60px;
+        }
+
+        #h2 {
+            position: relative;
+            bottom: 100px;
+            left: 70px;
+        }
+
+        #fmain {
+            position: relative;
+            bottom: 50px;
+            right: 45px;
+        }
+
+
+        #display {
+            position: relative;
+            bottom: -100px;
+            right: 250px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #122741;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        #edit {
+            position: relative;
+            bottom: 0px;
+            left: 70px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="sidebar">
+            <img src="img_avatar2.png" id="picture" alt="Avatar" class="avatar">
+            <a href="myProfile.html">My Profile</a>
+            <a href="mainScreen.html">Update Shifts</a>
+            <a href="salaryCalculation.html">Salary Calculation</a>
+            <a href="contactForm.html">Contact Us</a>
+            <a id="logout" href="index.html">Log out</a>
+        </div>
+
+        <div id="h2">
+            <h2>My Employment Profile</h2>
+            <hr>
+        </div>
+
+
+        <div id="fmain">
+            <b>Company Name:</b>&nbsp;<b id="Company Name"></b>
+            <br> <br> <br>
+            <b>Job Title:</b>&nbsp;<b id="Job Title"></b>
+            <br> <br> <br>
+            <b>Hourly Wage:</b>&nbsp;<b id="Hourly Wage"></b>
+            <br> <br> <br>
+            <b>Daily Travel Payment:</b>&nbsp;<b id="Daily Travel Payment"></b>
+            <br><br><br>
+            <b>Daily Salary Supplement:</b>&nbsp;<b id="Daily Salary Supplement"></b>
+        </div>
+        <button id="edit">Edit Employment Profile</button>
+    </div>
+    
+    <div>
+        
+    </div>
+    <script>
+        const users = JSON.parse(localStorage.getItem('data')) || [];
+        const userName = sessionStorage.getItem("userName");
+        const shifts = JSON.parse(localStorage.getItem(userName))
+        var profileImage = document.getElementById("picture");
+        var user = users.findIndex(function (u) {
+            return u.userName == userName;
+        });
+        var profileImage = document.getElementById("picture");
+        if (user > -1) {
+            profileImage.src = users[user].picture;
+        } else {
+            profileImage.src = "img_avatar2.png";
+        }
+
+        document.getElementById("edit").addEventListener("click", function () {
+            window.location.href = 'editEmploymentProfile.html';
+        })
+
+        document.getElementById("Company Name").innerHTML = " " + users[user].companyName || ' ' 
+        document.getElementById("Job Title").innerHTML = " " + users[user].jobTitle || ' '
+        document.getElementById("Hourly Wage").innerHTML = " " + users[user].hourlyWage || ' '
+        document.getElementById("Daily Travel Payment").innerHTML = " " + users[user].dailyTravelPayment || ' '
+        document.getElementById("Daily Salary Supplement").innerHTML = " " + users[user].dailySalarySupplement || ' ' 
+
+     
+    </script>
+
+</body>
+
+</html>

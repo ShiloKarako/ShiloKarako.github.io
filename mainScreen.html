@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+</head>
+<style>
+    body {
+        background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+
+    .container {
+        width: 450px;
+        margin: 0 auto;
+        padding: 250px;
+        height: 200px;
+        background-color: #fff;
+        border-radius: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: 22px;
+    }
+
+    .sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 200px;
+        background-color: #122741;
+        border-top-left-radius: 15px;
+        border-bottom-left-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .sidebar a {
+        color: white;
+        text-decoration: none;
+        margin: 10px 0;
+        padding: 5px 10px;
+    }
+
+
+    input {
+        width: 76%;
+        padding: 15px;
+        margin: 5px 0 22px 0;
+        display: inline-block;
+        border: none;
+        background: #f1f1f1;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: medium;
+    }
+
+  
+    input[type="datetime-local"] {
+        border-radius: 10px;
+        box-shadow: 0px 2px 8px rgba(196, 76, 76, 0.1);
+        outline: none;
+        transition: box-shadow 0.3s ease;
+    }
+
+    input[type="datetime-local"]:hover {
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    }
+
+    input[type="datetime-local"]:focus {
+        box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+    }
+
+
+
+    
+    button {
+        padding: 12px 20px;
+        background-color: #122741;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:focus {
+        outline: none;
+    }
+
+    hr {
+        border: 1px solid #f1f1f1;
+        margin-bottom: 25px;
+    }
+
+    #logout {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #ffffff;
+        color: #122741;
+        text-decoration: none;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        position: absolute;
+        bottom: 25px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #logout:hover {
+        background-color: #ff0015;
+        color: #ffffff;
+    }
+    img.avatar {
+        position: absolute;
+        width: 65%;
+        border-radius: 50%;
+        top: 60px;
+    }
+    #main {
+        position: relative;
+        top: -35px;
+        left: 100px;
+    }
+
+
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="sidebar">
+            <img src="img_avatar2.png" id="picture" alt="Avatar" class="avatar">
+            <a href="myProfile.html">My Profile</a>
+            <a href="myEmploymentProfile.html">My Employment Profile</a>
+            <a href="salaryCalculation.html">Salary Calculation</a>
+            <a href="contactForm.html">Contact Us</a>
+            <a id="logout" href="index.html">Log out</a>
+        </div>
+        <form>
+            <div id="main">
+                <h2>Add a shift</h2>
+                <b>Update your shift start and end time:</b>
+                <hr> <br><br>
+            <label for="start-time"><b>Start shift</b></label> <br><br>
+            <input type="datetime-local" id="startTime" name="start-time" required>
+
+            <br><br>
+
+            <label for="end-time"><b>End shift</b></label><br><br>
+            <input type="datetime-local" id="endTime" name="end-time" required>
+
+            <br><br>
+
+            <button type="button" id="button">Update</button> <br>
+        </div>
+        </form>
+    </div>
+    <script>
+    const users = JSON.parse(localStorage.getItem('data')) || [];
+    const userName = sessionStorage.getItem("userName");
+    var profileImage = document.getElementById("picture");
+    var user = users.findIndex(function (u) {
+                    return u.userName == userName;
+                });
+
+                if (user > -1) {
+                    profileImage.src = users[user].picture;
+                } else {
+                    profileImage.src = "img_avatar2.png";
+                }
+            
+    
+
+document.getElementById("button").addEventListener("click", (e) => {
+  e.preventDefault();
+  const startDate = new Date(document.getElementById("startTime").value);
+  const endDate = new Date(document.getElementById("endTime").value);
+
+  var differenceInMillisecs = endDate - startDate;
+
+  if (differenceInMillisecs < 0) {
+    alert("End time must be after the start time!");
+  } else {
+    var differenceInMinutes = differenceInMillisecs / (1000 * 60);
+    differenceInMinutes = differenceInMinutes / 60;
+    var hours = Math.floor(differenceInMinutes);
+    var minutes = Math.round((differenceInMinutes - hours) * 60);
+    var result = Number(hours + "." + minutes);
+    var count = result;
+
+    if (count >= 12) {
+      count = result - 12;
+      shift = {
+        startDate: startDate,
+        OneHundredAndFiftyBonus: count,
+        OneHundredAndTwentyFiveBonus: 4,
+        regularHours: 8
+      };
+    } else if (count > 8 && count < 12) {
+      count = result - 8;
+      shift = {
+        startDate: startDate,
+        OneHundredAndFiftyBonus: 0,
+        OneHundredAndTwentyFiveBonus: count,
+        regularHours: 8
+      };
+    } else {
+      shift = {
+        startDate: startDate,
+        OneHundredAndFiftyBonus: 0,
+        OneHundredAndTwentyFiveBonus: 0,
+        regularHours: count
+      };
+    }
+
+    alert("The shift has been successfully added");
+
+    const userName = sessionStorage.getItem("userName");
+    const index = users.findIndex(function (e) {
+      return e.userName == userName;
+    });
+
+   // מבקש את המערך לפי שם המשתמש שלו
+    const existingShifts = JSON.parse(localStorage.getItem(userName)) || [];
+    // דוחף משמרת למערך משמרות לפי שם משתמש
+    existingShifts.push(shift);
+    // שומר באחסון מקומי על בסיס שם המשתמש
+    localStorage.setItem(userName, JSON.stringify(existingShifts));
+  }
+});
+    </script>
+
+</body>
+
+</html>

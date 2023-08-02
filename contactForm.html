@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="4915051.png">
+  <title>Shift Management</title>
+  <script src="https://smtpjs.com/v3/smtp.js"></script>
+</head>
+<style>
+  input[type=submit] {
+    background-color: #122741;
+    color: #ffffff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  body {
+    background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+  input[type=text],
+  input[type=password] {
+    width: 95%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  input[type=text]:focus,
+  input[type=password]:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  textarea {
+    width: 95%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+  }
+
+  textarea:focus {
+    background-color: #ddd;
+    outline: none;
+  }
+
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+
+  .container {
+    width: 550px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    position: relative;
+    top: 22px;
+  }
+
+  button {
+    display: block;
+    width: 10%;
+    padding: 15px;
+    background-color: #122741;
+    color: #fff;
+    font-size: small;
+    cursor: pointer;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  * {
+    box-sizing: content-box
+  }
+
+</style>
+
+<body>
+  
+  <form class="form">
+    <div class="container">
+      <h1>Contact Us</h1>
+      <p>Please enter a message you would like to send about us</p>
+      <hr>
+
+      <label for="subject"><b>Subject</b></label>
+      <input type="text" id="subject" placeholder="message subject" required> <br><br>
+
+      <label for="message"><b>Message</b></label>
+      <textarea id="message" cols="30" rows="10" required></textarea>
+
+      <button id="submit"> Submit
+
+
+  </form>
+
+</body>
+<script>
+  const users = JSON.parse(localStorage.getItem('data')) || [];
+  document.getElementById("submit").addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log("clicked")
+    const userName = sessionStorage.getItem("userName");
+    var user = users.findIndex(function (u) {
+      return u.userName == userName;
+    });
+    const firstName = users[user].firstName
+    const lastname = users[user].lastName
+    const subject = document.getElementById("subject").value
+    const message = document.getElementById("message").value
+    const email = users[user].email
+    Email.send({
+      SecureToken: "112d8a68-3fbc-4272-ae64-f15ea20e9cc0",
+      To: "shiftmanagementsystem365@gmail.com",
+      From: "shiftmanagementsystem2000@gmail.com",
+      Subject: subject,
+      Body: "A Message from" + " " + firstName + " " + lastname + `<br> <br>` + message + `<br> <br>` + "An email account for the purpose of customer assistance" + " " + email
+    }).then(
+    );
+    alert("the message was sent successfully")
+    window.location.href = 'mainMenu.html';
+
+  })
+</script>
+
+</html>

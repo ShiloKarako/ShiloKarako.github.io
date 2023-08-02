@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: 450px;
+            margin: 0 auto;
+            padding: 250px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            font-size: small;
+            position: relative;
+            top: 22px;
+            height: 730px;
+            height: auto;
+        }
+
+        input[type=text],
+        input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus,
+        input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        .registerbtn {
+            background-color: #122741;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            width: 100%;
+            opacity: 0.9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+
+        input[type=submit] {
+            background-color: #122741;
+            color: white;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+        }
+
+
+        a {
+            color: #122741;
+        }
+
+        input[type="range"]::-webkit-slider-runnable-track {
+            background-color: #122741;
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background-color: #122741;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+            cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        #file-input {
+            display: none;
+        }
+
+        #file-input-label {
+            width: 135px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: white;
+            color: #122741;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: medium;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+
+        }
+
+        #file-input-label:hover {
+            width: 135px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #122741;
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: medium;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+        }
+
+        #hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #122741;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        #deleteAccountButton {
+            padding: 12px 20px;
+            background-color: #ffffff;
+            color: #122741;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #deleteAccountButton:hover {
+            background-color: #ff0015;
+            color: #ffffff;
+            outline: none;
+        }
+
+        #confirmDeleteButton {
+            padding: 12px 20px;
+            background-color: #ffffff;
+            color: #122741;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #confirmDeleteButton:hover {
+            background-color: #ff0015;
+            color: #ffffff;
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Edit Personal Data</h1>
+        <p>Here you can update your personal details</p>
+
+        <hr id="hr">
+        <label for="User Name"><b>User Name</b></label>
+        <input type="text" placeholder="Enter User Name" name="User Name" id="User Name" required>
+        <label for="First Name"><b>First Name</b></label>
+        <input type="text" placeholder="Enter First Name" name="First Name" id="First Name" required>
+        <label for="Last Name"><b>Last Name</b></label>
+        <input type="text" placeholder="Last Name" name="Last Name" id="Last Name" required>
+        <br>
+        <label for="Age"><b>Age</b></label>
+        <input id="Age" type="range" min="18" max="65" step="any" required />
+        <b>Value: <output id="value"></output></p>
+            <input type="file" id="file-input" name="file-input" />
+            <label id="file-input-label" for="file-input">Select a File</label>
+            <br>
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" id="email" required> <br>
+            <button id="update" type="submit" class="registerbtn">Update</button>
+            <br><br>
+            <button id="deleteAccountButton">Delete Account</button>
+            <div id="deleteAccountModal" style="display: none;">
+                <br><br>
+                <b>Are you sure you want to delete the account?</b>
+                <br><br>
+                <button id="confirmDeleteButton">Yes, delete account</button>
+                <button id="cancelDeleteButton">Cancel</button>
+            </div>
+
+    </div>
+
+
+    <script>
+        const users = JSON.parse(localStorage.getItem('data')) || [];
+        const userName = sessionStorage.getItem("userName");
+        const shifts = JSON.parse(localStorage.getItem(userName))
+
+        var user = users.findIndex(function (u) {
+            return u.userName == userName;
+        });
+        // נוגע לטווה הגיל שיש בדף
+        const value = document.querySelector("#value");
+        const input = document.querySelector("#Age");
+        value.textContent = input.value;
+        input.addEventListener("input", (event) => {
+            value.textContent = Math.floor(event.target.value);
+        });
+
+
+        document.getElementById("User Name").value = users[user].userName
+        document.getElementById("First Name").value = users[user].firstName
+        document.getElementById("Last Name").value = users[user].lastName
+        document.getElementById("Age").value = users[user].age
+        document.getElementById("value").value = users[user].age
+        document.getElementById("email").value = users[user].email
+        document.getElementById("file-input").src = users[user].picture
+
+
+        const oldKey = users[user].userName;
+        const companyName = users[user].companyName
+        const jobTitle = users[user].jobTitle
+        const hourlyWage = users[user].hourlyWage
+        const travelPayment = users[user].dailyTravelPayment
+        const salarySupplement = users[user].dailySalarySupplement
+        var oldPicture = users[user].picture
+
+
+
+
+        document.getElementById("update").addEventListener('click', function () {
+            const firstName = document.getElementById("First Name").value;
+            const lastName = document.getElementById("Last Name").value;
+            const age = document.getElementById("Age").value;
+            const userName = document.getElementById("User Name").value;
+            const emailUser = document.getElementById("email").value;
+            const password = users[user].password
+            const testRepeatPassword = users[user].password
+            var picture = document.getElementById("file-input").value;
+            picture = picture.replace(/^.*\\/, "")
+
+
+
+            // משתנה עזר שמכיל את התווים של השפה האנגלית כדי לאתר את התווים במשתנה שעליו נעשה טסט
+            const theCorrectLanguage = /^[A-Za-z]+$/;
+            const userNameResult = theCorrectLanguage.test(userName);
+            // משתנה עזר שמכיל ביטוי של כל התווים באנגלית ומספרים
+            const englishCharacters = /[A-Za-z]/
+            // משתנה עזר שמכיל תווים נומריים 0-9 כדי לאתר את התווים במשתנה שעליו נעשה טסט
+            const containsNumber = /\d/;
+            // ביצוע טסט לסיסמה לאתר תווים באנגלית ואם יהיה תווים בשפה אחרת חוץ מאנגלית המשתנה יהיה שווה לשקר ואז נוכל לעשות עליו תנאי
+            const passwordResultIsThereEng = englishCharacters.test(password);
+            // ביצוע טסט לסיסמה לאתר תווים מספרים בתוך השדה ואם לא יהיה מספר בכלל המשתנה יהיה שווה לשקר ואז נוכל לעשות עליו תנאי
+            const passwordResultIsThereNum = containsNumber.test(password);
+            // משתנה עזר שמכיל תווים בכתובת אימיל תקין
+            const correctEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            // ביצוע טסט על האיימל שאוזן כדי לבדוק האם הוא תקין על סמך המשתנה עזר
+            const emailResult = correctEmail.test(emailUser);
+
+            // בתנאי קיים התוצאה של הטסט לאיתור תווים באנגלית בתוך השם משתמש ואם התוצאה שונה מאמת תקפוץ מודעת שגיאה גם על שם המשתמש להיות מורכב ביותר מ-4 תווים אחרת מודעת שגיאה תקפוץ
+            if (userNameResult != true || userName.length < 4) {
+                alert("Invalid username ! Please note: Username must only be in English and over 4 characters");
+            }
+            // אם השם פרטי או השם משפחה קטנים מ-2 תווים מודעת שגיאה תקפוץ
+            else if (firstName.length < 2 || lastName.length < 2) {
+                alert("Please note: first name and last name must contain more than 2 characters");
+            }
+            // אם תוצאת טסט תקינות כתובת מייל על בסיס תווים שכתובת מייל אמורה להכיל תיהיה שונה מאמת אז מודעת שגיאה תקפוץ
+            else if (emailResult != true) {
+                alert("Invalid email address");
+            }
+
+
+            // users אם שום תנאי לא מתקיים כל הערכים נדחפיים לתוך אוביקט שנמצא במערך בשם 
+            else {
+                if (picture == '') {
+                    picture = users[user].picture
+                }
+                users[user] = {
+                    userName: userName,
+                    firstName: firstName,
+                    lastName: lastName,
+                    picture: picture,
+                    email: emailUser,
+                    age: Math.floor(age),
+                    password: password,
+                    companyName: companyName,
+                    jobTitle: jobTitle,
+                    hourlyWage: hourlyWage,
+                    dailyTravelPayment: travelPayment,
+                    dailySalarySupplement: salarySupplement
+                }
+
+
+                if (oldKey != userName) {
+                    //const secondvalue = localStorage.getItem('data')
+                    const value = localStorage.getItem(oldKey);
+                    const newKey = document.getElementById("User Name").value;
+                    localStorage.getItem(newKey)
+                    localStorage.setItem(newKey, value);
+                    //localStorage.setItem('data', users[user])
+                    sessionStorage.getItem("userName")
+                    sessionStorage.setItem("userName", userName);;
+                    sessionStorage.setItem("userName", userName);;
+
+                    function removeValueFromStorage() {
+                        if (localStorage.getItem(oldKey)) {
+                            localStorage.removeItem(oldKey);
+                        } else if (sessionStorage.getItem("userName")) {
+                            sessionStorage.removeItem("userName", oldKey);
+                        }
+                    }
+                    removeValueFromStorage()
+                }
+
+
+                // המרת מערך לשפה שהאחסון המקומי יודע לקרוא
+                const jsonArray = JSON.stringify(users);
+                // ואז שמירת המערך שהומרה לשפת האחסון לתוך אחסון הדפדפן
+                localStorage.setItem('data', jsonArray);
+                window.location.href = 'myProfile.html';
+
+            }
+        });
+        const deleteAccountButton = document.getElementById('deleteAccountButton');
+        const deleteAccountModal = document.getElementById('deleteAccountModal');
+        const confirmDeleteButton = document.getElementById('confirmDeleteButton');
+        const cancelDeleteButton = document.getElementById('cancelDeleteButton');
+    
+        deleteAccountButton.addEventListener('click', () => {
+            deleteAccountModal.style.display = 'block';
+        });
+
+        confirmDeleteButton.addEventListener('click', () => {
+            
+            users.splice(user, 1);
+            localStorage.removeItem(userName);
+            // המרת מערך לשפה שהאחסון המקומי יודע לקרוא
+            const jsonArray = JSON.stringify(users);
+            // ואז שמירת המערך שהומרה לשפת האחסון לתוך אחסון הדפדפן
+            localStorage.setItem('data', jsonArray);
+            sessionStorage.removeItem("userName");
+            window.location.href = 'index.html'
+            deleteAccountModal.style.display = 'none';
+        });
+
+        cancelDeleteButton.addEventListener('click', () => {
+            deleteAccountModal.style.display = 'none';
+        });
+
+
+
+    </script>
+</body>
+
+</html>

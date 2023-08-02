@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: 450px;
+            margin: 0 auto;
+            padding: 250px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 22px;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #122741;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 5px 10px;
+        }
+
+
+        input {
+            width: 75%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: medium;
+        }
+
+
+        input[type="date"],
+        [type="text"] {
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(196, 76, 76, 0.1);
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="date"]:hover,
+        [type="text"]:hover {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #122741;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        #logout {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #122741;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            position: absolute;
+            bottom: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #logout:hover {
+            background-color: #ff0015;
+            color: #ffffff;
+        }
+
+        img.avatar {
+            position: absolute;
+            width: 65%;
+            border-radius: 50%;
+            top: 60px;
+        }
+
+        h2 {
+            position: relative;
+            top: 145px;
+            left: 100px;
+        }
+
+        #main {
+            position: relative;
+            right: 70px;
+            top: 180px;
+            height: 400px;
+        }
+
+        #sal {
+            position: relative;
+            top: -213px;
+            right: -295px;
+            height: 400px;
+        }
+
+        #for {
+            position: relative;
+            width: 260px;
+            right: 14px;
+            top: -6px;
+        }
+
+        input::placeholder {
+            color: rgb(0, 0, 0);
+
+        }
+
+        select {
+            width: 86.5%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: medium;
+        }
+
+        select {
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(196, 76, 76, 0.1);
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        select:hover {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        option {
+            width: 86.5%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: medium;
+        }
+
+        option {
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(196, 76, 76, 0.1);
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        option:hover {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .custom-alert {
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        /* צבע הרקע */
+        .custom-alert-success {
+            background-color: #122741;
+        }
+
+        #bsal {
+            position: relative;
+            top: -5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Salary Calculation</h2>
+        <div class="sidebar">
+            <img src="img_avatar2.png" id="picture" alt="Avatar" class="avatar">
+            <a href="myProfile.html">My Profile</a>
+            <a href="myEmploymentProfile.html">My Employment Profile</a>
+            <a href="mainScreen.html">Update Shifts</a>
+            <a href="contactForm.html">Contact Us</a>
+            <a id="logout" href="index.html">Log out</a>
+        </div>
+        <form class="form">
+            <div id="main">
+                <b>Enter a date range to calculate salary:</b>
+                <hr><br><br>
+                <label for="start-time"><b>Start Date</b></label> <br><br>
+                <input type="date" id="startDate" name="start-date">
+                <br><br>
+                <label for="end-time"><b>End Date</b></label><br><br>
+                <input type="date" id="endDate" name="end-date">
+                <br><br>
+                <button type="button" id="button">Payroll Calculator</button> <br>
+            </div>
+            <div id="sal">
+                <b id="bsal">Enter year and month for pay slip:</b>
+                <hr id="for"><br><br>
+                <label for="month"><b>Date</b></label><br><br>
+                <input type="text" id="resDate" placeholder="mm/yyyy"><br><br>
+                <label for="slipRes"><b>How to get the payslip ?</b></label> <br><br>
+                <select id="slipRes">
+                    <option><b>Select here</b></option>
+                    <option value="Email"><b>Email</b></option>
+                    <option value="Site"><b>Site</b></option>
+                </select>
+                <br><br>
+                <button id="showPaySlip">Show pay slip</button>
+            </div>
+        </form>
+    </div>
+    <script>
+        const users = JSON.parse(localStorage.getItem('data')) || [];
+        const userName = sessionStorage.getItem("userName");
+        const shifts = JSON.parse(localStorage.getItem(userName))
+        var profileImage = document.getElementById("picture");
+
+        var user = users.findIndex(function (u) {
+            return u.userName == userName;
+        });
+
+        if (user > -1) {
+            profileImage.src = users[user].picture;
+        } else {
+            profileImage.src = "img_avatar2.png";
+        }
+
+
+
+        document.getElementById("button").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const startDateInput = document.getElementById("startDate").value;
+            const endDateInput = document.getElementById("endDate").value;
+
+            const startDate = new Date(startDateInput);
+            startDate.setHours(0, 0, 0, 0);
+
+            const endDate = new Date(endDateInput);
+            endDate.setHours(23, 59, 0, 0);
+
+            const filterShifts = shifts.filter(function (d) {
+                const shiftStartDate = new Date(d.startDate);
+                return startDate <= shiftStartDate && shiftStartDate <= endDate;
+            });
+            let hourlyWage = users[user].hourlyWage
+            if (hourlyWage == null || hourlyWage < 29.12) {
+                hourlyWage = 29.12
+            }
+            else {
+                hourlyWage = users[user].hourlyWage
+            }
+            // חישוב שכר לפי תא לשעות 150%
+            var calcOneHundredAndFiftyBonus = filterShifts.map(function (a) {
+                return a.OneHundredAndFiftyBonus * 1.5 * hourlyWage
+            })
+            console.log(calcOneHundredAndFiftyBonus)
+            // חישוב שכר לפי תא לשעות 125%
+            var calcOneHundredAndTwentyFiveBonus = filterShifts.map(function (a) {
+                return a.OneHundredAndTwentyFiveBonus * 1.25 * hourlyWage
+
+            })
+            console.log(calcOneHundredAndTwentyFiveBonus)
+            // חישוב שכר לפי תא לשעות 100%
+            var calcRegularHours = filterShifts.map(function (a) {
+                return a.regularHours * hourlyWage
+            })
+
+            const ratePerDays = []
+            let ratePerDay = 0
+            filterShifts.forEach((r) => {
+                ratePerDay = (r.regularHours + r.OneHundredAndTwentyFiveBonus * 1.25 + r.OneHundredAndFiftyBonus * 1.5) * hourlyWage + users[user].dailySalarySupplement + users[user].dailyTravelPayment
+                ratePerDays.push(ratePerDay)
+            })
+            console.log(ratePerDays)
+
+
+            // סיכום שכר לשעות 150%
+            let sumOneHundredAndFiftyBonus = 0
+            calcOneHundredAndFiftyBonus.forEach((s) => {
+                sumOneHundredAndFiftyBonus += s
+            })
+
+            // סיכום שכר לשעות 125%
+            let sumOneHundredAndTwentyFiveBonus = 0
+            calcOneHundredAndTwentyFiveBonus.forEach((s) => {
+                sumOneHundredAndTwentyFiveBonus += s
+            })
+
+            // סיכום שכר לשעות 100%
+            let sumRegularHours = 0
+            calcRegularHours.forEach((s) => {
+                sumRegularHours += s
+            })
+
+            //סיכום שעות 150%
+            let hoursOneHundredAndFiftyBonus = 0;
+            filterShifts.forEach((s) => {
+                hoursOneHundredAndFiftyBonus += s.OneHundredAndFiftyBonus;
+            });
+
+            //סיכום שעות 125%
+            let hoursOneHundredAndTwentyFiveBonus = 0;
+            filterShifts.forEach((s) => {
+                hoursOneHundredAndTwentyFiveBonus += s.OneHundredAndTwentyFiveBonus;
+            });
+
+            // סיכום שעות רגילות
+            let hoursRegularHours = 0;
+            filterShifts.forEach((s) => {
+                hoursRegularHours += s.regularHours;
+            });
+            console.log(hoursRegularHours)
+
+            // סיכום שעות כללי
+            const hours = hoursOneHundredAndFiftyBonus + hoursOneHundredAndTwentyFiveBonus + hoursRegularHours
+            // סיכום שכר כללי
+            const salary = sumOneHundredAndFiftyBonus + sumOneHundredAndTwentyFiveBonus + sumRegularHours
+
+
+            /*const hoursPerDays = []
+            let hoursPerDay = 0
+            filterShifts.forEach((h) => {
+                hoursPerDay = h.regularHours + h.OneHundredAndTwentyFiveBonus + h.OneHundredAndFiftyBonus
+                //hoursPerDays.push(hoursPerDay)
+            })*/
+
+            var result = filterShifts.map(function (r) {
+                var dateMap = new Date(r.startDate)
+                var year = dateMap.getFullYear()
+                var month = dateMap.getMonth() + 1
+                var day = dateMap.getDate()
+                return `<tr>
+                    <td>${`${day}/${month}/${year}`}</td>
+                    <td>${r.regularHours}</td>
+                    <td>${r.OneHundredAndTwentyFiveBonus}</td>
+                    <td>${r.OneHundredAndFiftyBonus}</td>
+                    <td>${r.regularHours * hourlyWage}</td>
+                    <td>${r.OneHundredAndTwentyFiveBonus * 1.25 * hourlyWage}</td>
+                    <td>${r.OneHundredAndFiftyBonus * 1.5 * hourlyWage}</td>
+                    <td>${r.regularHours + r.OneHundredAndTwentyFiveBonus + r.OneHundredAndFiftyBonus}</td>
+                    <td>${r.regularHours * hourlyWage + r.OneHundredAndTwentyFiveBonus * hourlyWage * 1.25 + r.OneHundredAndFiftyBonus * hourlyWage * 1.5}</td>
+                    </tr>`
+
+            })
+
+            const url = `tab.html?result=${result}&sumSalary=${salary}&sumHours=${hours}&hours100=${hoursRegularHours}&hours125=${hoursOneHundredAndTwentyFiveBonus}&hours150=${hoursOneHundredAndFiftyBonus}&sum100=${sumRegularHours}&sum125=${sumOneHundredAndTwentyFiveBonus}&sum150=${sumOneHundredAndFiftyBonus}&start=${startDate}&end=${endDate}&shifts=${filterShifts}`;
+            window.location.href = url
+
+        });
+
+        document.getElementById("showPaySlip").addEventListener("click", (e) => {
+            e.preventDefault();
+            var input = document.getElementById('resDate').value;
+            var format = /^\d{2}\/\d{4}$/;
+            var res = format.test(input);
+
+
+            if (res === false) {
+                alert("Please enter a valid date according to the requested format (mm/yyyy)");
+            } else {
+                var [monthInput, yearInput] = input.split('/');
+                var dateForSlip = monthInput + "/" + yearInput
+                yearInput = Number(yearInput);
+                monthInput = Number(monthInput) - 1;
+                const slipResult = shifts.filter(function (d) {
+                    return new Date(d.startDate).getFullYear() == yearInput && new Date(d.startDate).getUTCMonth() == monthInput;
+                })
+
+
+                const travelPayment = users[user].dailyTravelPayment
+                const salarySupplement = users[user].dailySalarySupplement
+                const email = users[user].email
+                let hourlyWage = users[user].hourlyWage
+                if (hourlyWage == null || hourlyWage < 29.12) {
+                    hourlyWage = 29.12
+                }
+                else {
+                    hourlyWage = users[user].hourlyWage
+                }
+                // חישוב שכר לפי תא לשעות 150%
+                var calcOneHundredAndFiftyBonus = slipResult.map(function (a) {
+                    return a.OneHundredAndFiftyBonus * 1.5 * hourlyWage
+                })
+                console.log(calcOneHundredAndFiftyBonus)
+                // חישוב שכר לפי תא לשעות 125%
+                var calcOneHundredAndTwentyFiveBonus = slipResult.map(function (a) {
+                    return a.OneHundredAndTwentyFiveBonus * 1.25 * hourlyWage
+
+                })
+                console.log(calcOneHundredAndTwentyFiveBonus)
+                // חישוב שכר לפי תא לשעות 100%
+                var calcRegularHours = slipResult.map(function (a) {
+                    return a.regularHours * hourlyWage
+                })
+
+                // סיכום שכר לשעות 150%
+                let sumOneHundredAndFiftyBonus = 0
+                calcOneHundredAndFiftyBonus.forEach((s) => {
+                    sumOneHundredAndFiftyBonus += s
+                })
+
+                // סיכום שכר לשעות 125%
+                let sumOneHundredAndTwentyFiveBonus = 0
+                calcOneHundredAndTwentyFiveBonus.forEach((s) => {
+                    sumOneHundredAndTwentyFiveBonus += s
+                })
+
+                // סיכום שכר לשעות 100%
+                let sumRegularHours = 0
+                calcRegularHours.forEach((s) => {
+                    sumRegularHours += s
+                })
+                //סיכום שעות 150%
+                let hoursOneHundredAndFiftyBonus = 0;
+                slipResult.forEach((s) => {
+                    hoursOneHundredAndFiftyBonus += s.OneHundredAndFiftyBonus;
+                });
+
+                //סיכום שעות 125%
+                let hoursOneHundredAndTwentyFiveBonus = 0;
+                slipResult.forEach((s) => {
+                    hoursOneHundredAndTwentyFiveBonus += s.OneHundredAndTwentyFiveBonus;
+                });
+
+                // סיכום שעות רגילות
+                let hoursRegularHours = 0;
+                slipResult.forEach((s) => {
+                    hoursRegularHours += s.regularHours;
+                });
+                console.log(hoursRegularHours)
+
+                // סיכום שעות כללי
+                const hours = hoursOneHundredAndFiftyBonus + hoursOneHundredAndTwentyFiveBonus + hoursRegularHours
+                // סיכום שכר כללי
+                const salary = sumOneHundredAndFiftyBonus + sumOneHundredAndTwentyFiveBonus + sumRegularHours
+
+                const answer = document.getElementById("slipRes").value
+                console.log(answer)
+                if (answer == "Email") {
+                    Email.send({
+                        SecureToken: "112d8a68-3fbc-4272-ae64-f15ea20e9cc0",
+                        To: users[user].email,
+                        From: "shiftmanagementsystem2000@gmail.com",
+                        Subject: "Paycheck",
+                        Body:
+                            `<body>
+                            <div class="container">
+                             <h2>Payslip</h2> <b>Date:</b>&nbsp;<b>${dateForSlip}</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Name:</b>&nbsp;<b>${users[user].firstName + " " + users[user].lastName}</b>  
+                             <hr>
+                             <b>Company Name:</b>&nbsp;<b>${users[user].companyName}</b>
+                             <br> <br>
+                             <b>Job Title:</b>&nbsp;<b>${users[user].jobTitle}</b>
+                             <br> <br> 
+                             <b>Hourly Wage:</b>&nbsp;<b>${hourlyWage}</b>
+                             <br> <br> 
+                             <b>Working days:</b>&nbsp;<b>${slipResult.length}</b>
+                             <br> <br> 
+                             <b>Total regular hours:</b>&nbsp;<b>${hoursRegularHours}</b>
+                             <br> <br> 
+                             <b>Total hours 125%:</b>&nbsp;<b>${hoursOneHundredAndTwentyFiveBonus}</b>
+                             <br> <br> 
+                             <b>Total hours 150%:</b>&nbsp;<b>${hoursOneHundredAndFiftyBonus}</b>
+                             <br> <br> 
+                             <b>Total hours:</b>&nbsp;<b>${hours}</b>
+                             <br> <br> 
+                             <b>Total Rate for regular hours:</b>&nbsp;<b>${sumRegularHours}</b>
+                             <br> <br> 
+                             <b>Total Rate for hours 125%:</b>&nbsp;<b>${sumOneHundredAndTwentyFiveBonus}</b>
+                             <br> <br> 
+                             <b>Total Rate for hours 150%:</b>&nbsp;<b>${sumOneHundredAndFiftyBonus}</b>
+                             <br> <br> 
+                             <b>Total Hourly Rate:</b>&nbsp;<b>${sumRegularHours + sumOneHundredAndTwentyFiveBonus + sumOneHundredAndFiftyBonus}</b>
+                             <br> <br> 
+                             <b>Travel Expenses:</b>&nbsp;<b>${Math.floor(travelPayment * slipResult.length)}</b>
+                             <br><br>
+                             <b>Salary Supplement:</b>&nbsp;<b>${salarySupplement * slipResult.length}</b>
+                             <br><br>
+                             <b>Total Salary:</b>&nbsp;<b>${salary + (salarySupplement * slipResult.length) + (travelPayment * slipResult.length)}</b>
+                             </div>
+                             </body>`
+                    }).then(() => {
+                        alert("A pay slip is currently being sent to you by email");
+                    })
+                }
+                else if (answer == "Site") {
+                    const url = `paySlip.html?date=${dateForSlip}&salary=${salary}&hours=${hours}&hours100=${hoursRegularHours}&hours125=${hoursOneHundredAndTwentyFiveBonus}&hours150=${hoursOneHundredAndFiftyBonus}&sum100=${sumRegularHours}&sum125=${sumOneHundredAndTwentyFiveBonus}&sum150=${sumOneHundredAndFiftyBonus}&result=${slipResult}&length=${slipResult.length}`;
+                }
+                else {
+                    alert("Please choose how to view the pay slip by email or on the website")
+                }
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

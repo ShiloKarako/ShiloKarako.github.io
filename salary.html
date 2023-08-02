@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        .container {
+            width: 450px;
+            margin: 0 auto;
+            padding: 250px;
+            height: 200px;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            top: 22px;
+        }
+
+        .sidebar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #122741;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            margin: 10px 0;
+            padding: 5px 10px;
+        }
+
+
+        input {
+            width: 75%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: medium;
+        }
+
+
+        input[type="date"] {
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(196, 76, 76, 0.1);
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="date"]:hover {
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        input[type="date"]:focus {
+            box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.2);
+        }
+
+        input {
+            width: 75%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: medium;
+        }
+
+
+
+        button {
+            padding: 12px 20px;
+            background-color: #122741;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        #logout {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #122741;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            position: absolute;
+            bottom: 25px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        #logout:hover {
+            background-color: #ff0015;
+            color: #ffffff;
+        }
+
+        img.avatar {
+            position: absolute;
+            width: 65%;
+            border-radius: 50%;
+            top: 60px;
+        }
+
+        #main {
+            position: relative;
+            top: -35px;
+            left: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <img src="img_avatar2.png" id="picture" alt="Avatar" class="avatar">
+            <a href="myProfile.html">My Profile</a>
+            <a href="myEmploymentProfile.html">My Employment Profile</a>
+            <a href="mainScreen.html">Update Shifts</a>
+            <a href="contactForm.html">Contact Us</a>
+            <a id="logout" href="index.html">Log out</a>
+        </div>
+        <form class="form">
+            <div id="main">
+                <h2>Salary Calculation</h2>
+                <b>Enter a date range to calculate salary:</b>
+                <hr> <br><br>
+                <label for="start-time"><b>Start Date</b></label> <br><br>
+                <input type="date" id="startDate" name="start-date" required>
+                <br><br>
+                <label for="end-time"><b>End Date</b></label><br><br>
+                <input type="date" id="endDate" name="end-date" required>
+                <br><br>
+                <button type="button" id="button">Payroll Calculator</button> <br> 
+            </div>
+        </form>
+    </div>
+    <script>
+        const users = JSON.parse(localStorage.getItem('data')) || [];
+        const userName = sessionStorage.getItem("userName");
+        const shifts = JSON.parse(localStorage.getItem(userName))
+        var profileImage = document.getElementById("picture");
+
+        var user = users.findIndex(function (u) {
+            return u.userName == userName;
+        });
+
+        if (user > -1) {
+            profileImage.src = users[user].picture;
+        } else {
+            profileImage.src = "img_avatar2.png";
+        }
+
+
+
+        document.getElementById("button").addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const startDateInput = document.getElementById("startDate").value;
+            const endDateInput = document.getElementById("endDate").value;
+
+            const startDate = new Date(startDateInput);
+            startDate.setHours(0, 0, 0, 0);
+
+            const endDate = new Date(endDateInput);
+            endDate.setHours(23, 59, 0, 0);
+
+            const filterShifts = shifts.filter(function (d) {
+                const shiftStartDate = new Date(d.startDate);
+                return startDate <= shiftStartDate && shiftStartDate <= endDate;
+            });
+
+            const hourlyWage = users[user].hourlyWage
+            // חישוב שכר לפי תא לשעות 150%
+            var calcOneHundredAndFiftyBonus = filterShifts.map(function (a) {
+                return a.OneHundredAndFiftyBonus * 1.5 * hourlyWage
+            })
+            console.log(calcOneHundredAndFiftyBonus)
+            // חישוב שכר לפי תא לשעות 125%
+            var calcOneHundredAndTwentyFiveBonus = filterShifts.map(function (a) {
+                return a.OneHundredAndTwentyFiveBonus * 1.25 * hourlyWage
+
+            })
+            console.log(calcOneHundredAndTwentyFiveBonus)
+            // חישוב שכר לפי תא לשעות 100%
+            var calcRegularHours = filterShifts.map(function (a) {
+                return a.regularHours * hourlyWage
+            })
+
+            const ratePerDays = []
+            let ratePerDay = 0
+            filterShifts.forEach((r) => {
+                ratePerDay = (r.regularHours + r.OneHundredAndTwentyFiveBonus * 1.25 + r.OneHundredAndFiftyBonus * 1.5) * hourlyWage + users[user].dailySalarySupplement + users[user].dailyTravelPayment
+                ratePerDays.push(ratePerDay)
+            })
+            console.log(ratePerDays)
+
+
+            // סיכום שכר לשעות 150%
+            let sumOneHundredAndFiftyBonus = 0
+            calcOneHundredAndFiftyBonus.forEach((s) => {
+                sumOneHundredAndFiftyBonus += s
+            })
+
+            // סיכום שכר לשעות 125%
+            let sumOneHundredAndTwentyFiveBonus = 0
+            calcOneHundredAndTwentyFiveBonus.forEach((s) => {
+                sumOneHundredAndTwentyFiveBonus += s
+            })
+
+            // סיכום שכר לשעות 100%
+            let sumRegularHours = 0
+            calcRegularHours.forEach((s) => {
+                sumRegularHours += s
+            })
+
+            //סיכום שעות 150%
+            let hoursOneHundredAndFiftyBonus = 0;
+            filterShifts.forEach((s) => {
+                hoursOneHundredAndFiftyBonus += s.OneHundredAndFiftyBonus;
+            });
+            console.log(hoursOneHundredAndFiftyBonus)
+
+            //סיכום שעות 125%
+            let hoursOneHundredAndTwentyFiveBonus = 0;
+            filterShifts.forEach((s) => {
+                hoursOneHundredAndTwentyFiveBonus += s.OneHundredAndTwentyFiveBonus;
+            });
+            console.log(hoursOneHundredAndTwentyFiveBonus)
+
+            // סיכום שעות רגילות
+            let hoursRegularHours = 0;
+            filterShifts.forEach((s) => {
+                hoursRegularHours += s.regularHours;
+            });
+            console.log(hoursRegularHours)
+
+            // סיכום שעות כללי
+            const hours = hoursOneHundredAndFiftyBonus + hoursOneHundredAndTwentyFiveBonus + hoursRegularHours
+            // סיכום שכר כללי
+            const salary = sumOneHundredAndFiftyBonus + sumOneHundredAndTwentyFiveBonus + sumRegularHours
+
+
+            /*const hoursPerDays = []
+            let hoursPerDay = 0
+            filterShifts.forEach((h) => {
+                hoursPerDay = h.regularHours + h.OneHundredAndTwentyFiveBonus + h.OneHundredAndFiftyBonus
+                //hoursPerDays.push(hoursPerDay)
+            })*/
+          
+            var result = filterShifts.map(function(r) {
+                var dateMap = new Date(r.startDate)
+                var year = dateMap.getFullYear()
+                var month = dateMap.getMonth() + 1
+                var day = dateMap.getDate()
+                return `<tr>
+                    <td>${`${day}/${month}/${year}`}</td>
+                    <td>${r.regularHours}</td>
+                    <td>${r.OneHundredAndTwentyFiveBonus}</td>
+                    <td>${r.OneHundredAndFiftyBonus}</td>
+                    <td>${r.regularHours * hourlyWage}</td>
+                    <td>${r.OneHundredAndTwentyFiveBonus * 1.25 * hourlyWage}</td>
+                    <td>${r.OneHundredAndFiftyBonus * 1.5 * hourlyWage}</td>
+                    <td>${r.regularHours + r.OneHundredAndTwentyFiveBonus + r.OneHundredAndFiftyBonus}</td>
+                    <td>${r.regularHours * hourlyWage + r.OneHundredAndTwentyFiveBonus * hourlyWage * 1.25 + r.OneHundredAndFiftyBonus * hourlyWage * 1.5}</td>
+                    </tr>`
+
+            })
+
+            
+
+            const url = `table.html?result=${result}&sumSalary=${salary}&sumHours=${hours}&hours100=${hoursRegularHours}&hours125=${hoursOneHundredAndTwentyFiveBonus}&hours150=${hoursOneHundredAndFiftyBonus}&sum100=${sumRegularHours}&sum125=${sumOneHundredAndTwentyFiveBonus}&sum150=${sumOneHundredAndFiftyBonus}&start=${startDate}&end=${endDate}&shifts=${filterShifts}`;
+
+            window.location.href = url; 
+        });
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>

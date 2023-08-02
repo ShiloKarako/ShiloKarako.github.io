@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="4915051.png">
+    <title>Shift Management</title>
+    <style>
+        body {
+            background-image: url("https://images.pexels.com/photos/164005/pexels-photo-164005.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            width: 450px;
+            margin: 0 auto;
+            padding: 250px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            flex-direction: column;
+            position: relative;
+            top: 22px;
+            height: 650PX;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 15px;
+            height: auto;
+        }
+
+        input[type=text],
+        input[type=password],
+        input[type=number] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            display: inline-block;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        input[type=text]:focus,
+        input[type=password]:focus,
+        input[type=number]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+
+        hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        .registerbtn {
+            background-color: #122741;
+            color: white;
+            padding: 16px 20px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            opacity: 0.9;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+
+        input[type=submit] {
+            background-color: #122741;
+            color: white;
+        }
+
+        #hr {
+            border: 1px solid #f1f1f1;
+            margin-bottom: 25px;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #122741;
+            color: white;
+
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Payslip</h2>
+        <b>Date:</b><b id="date"></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Name:</b>&nbsp;<b id="name"></b>
+        <hr>
+        <b>Company Name:</b>&nbsp;<b id="companyName"></b>
+        <br> <br>
+        <b>Job Title:</b>&nbsp;<b id="jobTitle"></b>
+        <br> <br>
+        <b>Hourly Wage:</b>&nbsp;<b id="hourlyWage"></b>
+        <br> <br>
+        <b>Working days:</b>&nbsp;<b id="workingDays"></b>
+        <br> <br>
+        <b>Total regular hours:</b>&nbsp;<b id="trh"></b>
+        <br> <br>
+        <b>Total hours 125%:</b>&nbsp;<b id="th125"></b>
+        <br> <br>
+        <b>Total hours 150%:</b>&nbsp;<b id="th150"></b>
+        <br> <br>
+        <b>Total hours:</b>&nbsp;<b id="th"></b>
+        <br> <br>
+        <b>Total Rate for regular hours:</b>&nbsp;<b id="trrh"></b>
+        <br> <br>
+        <b>Total Rate for hours 125%:</b>&nbsp;<b id="trh125"></b>
+        <br> <br>
+        <b>Total Rate for hours 150%:</b>&nbsp;<b id="trh150"></b>
+        <br> <br>
+        <b>Total Rate for hours:</b>&nbsp;<b id="tr"></b>
+        <br> <br>
+        <b>Travel Expenses:</b>&nbsp;<b id="travelExpenses"></b>
+        <br><br>
+        <b>Salary Supplement:</b>&nbsp;<b id="salarySupplement"></b>
+        <br><br>
+        <b>Total Salary:</b>&nbsp;<b id="totalSalary"></b>
+    </div>
+    <script>
+        const users = JSON.parse(localStorage.getItem('data')) || [];
+        const userName = sessionStorage.getItem("userName");
+        const shifts = JSON.parse(localStorage.getItem(userName))
+        var user = users.findIndex(function (u) {
+            return u.userName == userName;
+        })
+        let urlParams = new URLSearchParams(window.location.search);
+        let date = urlParams.get('date');
+        let sal = Number(urlParams.get('salary'));
+        let hours = urlParams.get('hours');
+        let hoursRegularHours = urlParams.get('hours100');
+        let hoursOneHundredAndTwentyFiveBonus = urlParams.get('hours125');
+        let hoursOneHundredAndFiftyBonus = urlParams.get('hours150');
+        let sum100 = Number(urlParams.get('sum100'));
+        let sum125 = Number(urlParams.get('sum125'));
+        let sum150 = Number(urlParams.get('sum150'));
+        let slipResult = urlParams.get('result');
+        let lengthResult = urlParams.get('length');
+        let sumRegularHours = sum100.toFixed(2);
+        let sumOneHundredAndTwentyFiveBonus = sum125.toFixed(2);
+        let sumOneHundredAndFiftyBonus = sum150.toFixed(2);
+        let salary = sal.toFixed(2);
+        let totalSalary = Number(salary) + (users[user].dailySalarySupplement * lengthResult) + (users[user].dailyTravelPayment * lengthResult)
+        let finalSalary = totalSalary.toFixed(2)
+
+     
+        document.getElementById('date').innerHTML = " " + date
+        document.getElementById('name').innerHTML = users[user].firstName + " " + users[user].lastName || 'Missing information'
+        document.getElementById('companyName').innerHTML = users[user].companyName || 'Missing information'
+        document.getElementById('jobTitle').innerHTML = users[user].jobTitle || 'Missing information'
+        document.getElementById('hourlyWage').innerHTML = users[user].hourlyWage || 29.12
+        document.getElementById('workingDays').innerHTML = lengthResult || 'Missing information'
+        document.getElementById('th').innerHTML = hours || 'Missing information'
+        document.getElementById('trh').innerHTML = hoursRegularHours || 'Missing information'
+        document.getElementById('th125').innerHTML = hoursOneHundredAndTwentyFiveBonus || 'Missing information'
+        document.getElementById('th150').innerHTML = hoursOneHundredAndFiftyBonus || 'Missing information'
+        document.getElementById('trrh').innerHTML = sumRegularHours || 'Missing information'
+        document.getElementById('trh125').innerHTML = sumOneHundredAndTwentyFiveBonus || 'Missing information'
+        document.getElementById('trh150').innerHTML = sumOneHundredAndFiftyBonus || 'Missing information'
+        document.getElementById('tr').innerHTML = salary || 'Missing information'
+        document.getElementById('travelExpenses').innerHTML = Math.floor(users[user].dailyTravelPayment * lengthResult) || 'Missing information'
+        document.getElementById('salarySupplement').innerHTML = users[user].dailySalarySupplement * lengthResult || 'Missing information'
+        document.getElementById('totalSalary').innerHTML = finalSalary || salary
+    </script>
+</body>
+
+</html>
